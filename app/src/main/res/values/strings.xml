@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ToDo_DawidKaminski</string>
+    <string name="action_browse">Browse</string>
+    <string name="HomepageHeading">ToDoApp</string>
+    <string name="AddNewHeading">Create New</string>
+    <string name="btnCreateText">Create</string>
+    <string name="itemTitle">Title:</string>
+    <string name="itemStatus">Completed? </string>
+    <string name="itemDescription">Description:</string>
+    <string name="DetailsHeading">Details</string>
+</resources>
