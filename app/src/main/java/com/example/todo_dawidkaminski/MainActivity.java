@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else{
-            Toast.makeText(getApplicationContext(), "There are currently no To Do's.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "There are currently no To-Do's.", Toast.LENGTH_SHORT).show();
         }
 
 

@@ -8,4 +8,6 @@
     <string name="itemStatus">Completed? </string>
     <string name="itemDescription">Description:</string>
     <string name="DetailsHeading">Details</string>
+    <string name="txtButtonPrevious">Previous</string>
+    <string name="txtButtonNext">Next</string>
 </resources>
