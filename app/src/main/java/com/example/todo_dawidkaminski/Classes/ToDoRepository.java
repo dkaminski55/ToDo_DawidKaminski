@@ -66,4 +66,8 @@ public class ToDoRepository {
         }
     }
 
+    public void delete(ToDo todo) {
+        ToDoList.remove(todo);
+    }
+
 }

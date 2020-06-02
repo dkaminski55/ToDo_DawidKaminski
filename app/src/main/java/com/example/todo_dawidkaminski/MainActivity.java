@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0;i < ToDoList.size();i++){
             ToDoTitleList.add(ToDoList.get(i).getTitle());
         }
+
         recyclerView = findViewById(R.id.recyclerview);
         adapter = new ToDoListAdapter(this, ToDoTitleList);
         recyclerView.setAdapter(adapter);

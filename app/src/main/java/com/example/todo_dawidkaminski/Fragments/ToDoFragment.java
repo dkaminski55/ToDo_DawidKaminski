@@ -32,7 +32,7 @@ import com.example.todo_dawidkaminski.R;
 
 public class ToDoFragment extends Fragment {
 
-    private static final String LOG_TAG = DetailsActivity.class.getSimpleName();
+    private static final String LOG_TAG = ToDoFragment.class.getSimpleName();
     private ToDoViewModel todoViewModel;
     private ToDo todo = new ToDo();
     private ToDoRepository todoRepo = ToDoRepository.getInstance();
@@ -69,6 +69,7 @@ public class ToDoFragment extends Fragment {
     public void onPause(){
         Log.d(LOG_TAG, "onPause");
         super.onPause();
+        //Save changes made to the current to-do
         UpdateItem();
     }
 
@@ -89,22 +90,34 @@ public class ToDoFragment extends Fragment {
         itemCompleted.setChecked(todo.getCompletionStatus());
 
 
-        Button mButtonNext = view.findViewById(R.id.buttonNext);
-        mButtonNext.setOnClickListener(new View.OnClickListener(){
+        Button ButtonNext = view.findViewById(R.id.buttonNext);
+        ButtonNext.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                UpdateItem();
                 next();
             }
-
         });
 
-        Button mButtonPrev = view.findViewById(R.id.buttonPrevious);
-        mButtonPrev.setOnClickListener(new View.OnClickListener(){
+        Button ButtonPrevious = view.findViewById(R.id.buttonPrevious);
+        ButtonPrevious.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                UpdateItem();
                 previous();
+            }
+        });
+
+        Button ButtonDelete = view.findViewById(R.id.buttonDelete);
+        ButtonDelete.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                todoViewModel.setToDo(todo);
+                DeleteFragment deleteFragment = DeleteFragment.newInstance();
+                assert getFragmentManager() != null;
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, deleteFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 
@@ -120,6 +133,7 @@ public class ToDoFragment extends Fragment {
     }
 
     private void next(){
+        UpdateItem();
         if ( todoRepo.isLast(todo)) {
             Toast toast = Toast.makeText(
                     getActivity(),
@@ -137,6 +151,7 @@ public class ToDoFragment extends Fragment {
     }
 
     private void previous(){
+        UpdateItem();
         if ( todoRepo.isFirst(todo)) {
             Toast toast = Toast.makeText(
                     getActivity(),
