@@ -1,19 +1,23 @@
 package com.example.todo_dawidkaminski.Classes;
 
+import java.util.Date;
+
 public class ToDo {
 
     private int id;
     private String title;
     private String description;
     private Boolean completed;
+    private ToDoDueDate due;
 
     public ToDo(){ }
 
-    public ToDo (int id, String title, String description, Boolean completed) {
+    public ToDo (int id, String title, String description, Boolean completed, ToDoDueDate due) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.completed = completed;
+        this.due = due;
     }
 
     public int getId() {
@@ -47,4 +51,8 @@ public class ToDo {
     public void setCompletionStatus(Boolean completed) {
         this.completed = completed;
     }
+
+    public ToDoDueDate getDueDate() { return due; }
+
+    public void setDueDate(ToDoDueDate due) { this.due = due; };
 }

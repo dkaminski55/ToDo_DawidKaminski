@@ -11,20 +11,23 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo_dawidkaminski.Classes.ToDo;
+import com.example.todo_dawidkaminski.Classes.ToDoDueDate;
+import com.example.todo_dawidkaminski.Classes.ToDoRepository;
+import com.example.todo_dawidkaminski.Classes.ToDoViewModel;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ToDoViewHolder> {
 
-    private final LinkedList<String> todoList;
+    private final ArrayList<ToDo> todoList;
     private LayoutInflater inflater;
     private Context _context;
 
-    public ToDoListAdapter(Context context, LinkedList<String> todoList){
+    public ToDoListAdapter(Context context, ArrayList<ToDo> todoList){
         inflater = LayoutInflater.from(context);
         _context = context;
         this.todoList = todoList;
@@ -32,25 +35,28 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ToDoVi
 
     class ToDoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public ToDo toDo;
+        public ToDo todo;
         public final TextView todoItemView;
+        public final TextView todoItemDueDateView;
         final ToDoListAdapter mAdapter;
+        private ToDoViewModel todoViewModel = ViewModelProviders.of((MainActivity)_context).get(ToDoViewModel.class);
 
         public ToDoViewHolder(View itemView, ToDoListAdapter adapter){
             super(itemView);
             todoItemView = itemView.findViewById(R.id.todoItem);
+            todoItemDueDateView = itemView.findViewById(R.id.todo_due_date);
+            itemView.setOnClickListener(this);
             this.mAdapter = adapter;
-        }
-
-        public void bind(ToDo todo){
-            toDo = todo;
         }
 
         @Override
         public void onClick(View v) {
+            int selectedIndex = getLayoutPosition();
+            ToDo todo = todoList.get(selectedIndex);
+            todoViewModel.setToDo(todo);
+            mAdapter.notifyDataSetChanged();
             //Use this to open selected To-Do item
-            Intent intent = DetailsActivity.newIntent(_context, toDo.getId());
-
+            Intent intent = DetailsActivity.newIntent(_context, todo.getId());
             _context.startActivity(intent);
         }
     }
@@ -64,9 +70,10 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.ToDoVi
 
     @Override
     public void onBindViewHolder(@NonNull ToDoListAdapter.ToDoViewHolder holder, int position) {
-        String currentItem = todoList.get(position);
-        holder.todoItemView.setText(currentItem);
-        //holder.bind(todo);
+        ToDo currentItem = todoList.get(position);
+        holder.todoItemView.setText(currentItem.getTitle());
+        ToDoDueDate dueDate = currentItem.getDueDate();
+        holder.todoItemDueDateView.setText(dueDate.getDueDateText());
     }
 
     @Override

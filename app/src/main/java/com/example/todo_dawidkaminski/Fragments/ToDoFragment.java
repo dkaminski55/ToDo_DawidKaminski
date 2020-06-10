@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ShareCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
@@ -36,12 +40,18 @@ public class ToDoFragment extends Fragment {
     private ToDoViewModel todoViewModel;
     private ToDo todo = new ToDo();
     private ToDoRepository todoRepo = ToDoRepository.getInstance();
-
     private EditText itemTitle;
     private EditText itemDescription;
     private Switch itemCompleted;
+    private TextView txtDueDate;
 
+    private static Context _MainContext;
     public static ToDoFragment newInstance() {
+        return new ToDoFragment();
+    }
+
+    public static ToDoFragment newInstance(Context mainContext){
+        _MainContext = mainContext;
         return new ToDoFragment();
     }
 
@@ -51,20 +61,28 @@ public class ToDoFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         Log.d( LOG_TAG, "onCreateView");
-
+        //Nav first item viewer
         todoViewModel = ViewModelProviders.of(getActivity()).get(ToDoViewModel.class);
+        //Recycler viewer
+        ToDoViewModel MainActivityToDoViewModel = ViewModelProviders.of((MainActivity) _MainContext).get(ToDoViewModel.class);
 
-        if (todoViewModel.getToDo() == null){
-            todo = todoRepo.GetFirstItem();
-        } else {
-            todo = todoViewModel.getToDo();
+        if(MainActivityToDoViewModel.getToDo() == null){
+            if (todoViewModel.getToDo() == null){
+                todo = todoRepo.GetFirstItem();
+            } else {
+                todo = todoViewModel.getToDo();
+            }
+        }
+        else{
+            todo = MainActivityToDoViewModel.getToDo();
+            MainActivityToDoViewModel.setToDo(null);
         }
 
         final View view = inflater.inflate(R.layout.activity_details, container, false);
         updateUI(view);
+
         return view;
     }
-
     @Override
     public void onPause(){
         Log.d(LOG_TAG, "onPause");
@@ -79,16 +97,16 @@ public class ToDoFragment extends Fragment {
         todo.setCompletionStatus(itemCompleted.isChecked());
     }
 
-
     private void updateUI(View view){
         itemTitle = view.findViewById(R.id.editItemTitle);
         itemDescription = view.findViewById(R.id.editItemDescription);
         itemCompleted = view.findViewById(R.id.editItemStatus);
+        txtDueDate = view.findViewById(R.id.dueDate);
 
         itemTitle.setText(todo.getTitle());
         itemDescription.setText(todo.getDescription());
         itemCompleted.setChecked(todo.getCompletionStatus());
-
+        txtDueDate.setText(todo.getDueDate().getDueDateText());
 
         Button ButtonNext = view.findViewById(R.id.buttonNext);
         ButtonNext.setOnClickListener(new View.OnClickListener(){
@@ -121,6 +139,22 @@ public class ToDoFragment extends Fragment {
             }
         });
 
+        Button ButtonShare = view.findViewById(R.id.buttonShare);
+        ButtonShare.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+            String mimeType = "text/plain";
+            ShareCompat.IntentBuilder
+                    .from(getActivity())
+                    .setType(mimeType)
+                    .setChooserTitle("Share to-do: ")
+                    .setText(todo.getDescription())
+                    .startChooser();
+            }
+        });
+
+
         view.setOnTouchListener(new OnSwipeTouchListener(getActivity()){
             public void onSwipeRight(){
                 previous();
@@ -134,7 +168,7 @@ public class ToDoFragment extends Fragment {
 
     private void next(){
         UpdateItem();
-        if ( todoRepo.isLast(todo)) {
+        if (todoRepo.isLast(todo)) {
             Toast toast = Toast.makeText(
                     getActivity(),
                     "This is the last To-Do!",
@@ -147,6 +181,7 @@ public class ToDoFragment extends Fragment {
             itemTitle.setText(todo.getTitle());
             itemDescription.setText(todo.getDescription());
             itemCompleted.setChecked(todo.getCompletionStatus());
+            txtDueDate.setText(todo.getDueDate().getDueDateText());
         }
     }
 
@@ -165,6 +200,7 @@ public class ToDoFragment extends Fragment {
             itemTitle.setText(todo.getTitle());
             itemDescription.setText(todo.getDescription());
             itemCompleted.setChecked(todo.getCompletionStatus());
+            txtDueDate.setText(todo.getDueDate().getDueDateText());
         }
     }
 }

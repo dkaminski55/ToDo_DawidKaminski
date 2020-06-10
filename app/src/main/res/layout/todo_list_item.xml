@@ -4,10 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="6dp">
-
     <TextView
         android:id="@+id/todoItem"
-        style="@style/todoItem_title">
-    </TextView>
+        style="@style/todoItem_title"/>
 
+    <TextView
+        android:id="@+id/todo_due_date"
+        style="@style/todoItem_due_date"/>
+
+    <View style="@style/Divider"/>
 </LinearLayout>

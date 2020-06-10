@@ -6,6 +6,12 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_browse"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_browse"/>
+    <item
+        android:id="@+id/action_website"
+        android:orderInCategory="100"
+        android:title="@string/action_visit"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_visit"/>
 </menu>

@@ -11,8 +11,12 @@
     <string name="txtButtonPrevious">Previous</string>
     <string name="txtButtonNext">Next</string>
     <string name="txtButtonDelete">Delete</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="txtDeleteMessage">You are about to delete the following to-do item:</string>
+    <string name="action_visit">Visit</string>
+    <string name="action_open_website">http://ebbi.glitch.me</string>
+    <string name="txtButtonShare"> Share</string>
+    <string name="datePicker">datePicker</string>
+    <string name="itemDueDate">Date Due:</string>
+    <string name="txtSetDate">Set</string>
 </resources>

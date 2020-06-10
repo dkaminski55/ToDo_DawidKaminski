@@ -32,6 +32,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addItemDescription" />
 
+    <TextView
+        android:id="@+id/txtItemDueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/itemDueDate"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtItemStatusEdit" />
+
     <Button
         android:id="@+id/btnCreateItem"
         android:layout_width="0dp"
@@ -100,5 +113,26 @@
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/txtItemStatusEdit"
         app:layout_constraintTop_toBottomOf="@+id/addItemDescription" />
+
+    <Button
+        android:id="@+id/btnSetDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/txtSetDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtItemDueDate" />
+
+    <TextView
+        android:id="@+id/txtDueDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtItemDueDate"
+        app:layout_constraintStart_toEndOf="@+id/txtItemDueDate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

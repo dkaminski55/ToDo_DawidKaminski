@@ -2,6 +2,7 @@ package com.example.todo_dawidkaminski.Classes;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 public class ToDoRepository {
 
@@ -19,8 +20,8 @@ public class ToDoRepository {
         return ToDoList;
     }
 
-    public void AddNewItem(String title, String description, Boolean status){
-        ToDoList.add(new ToDo(NextItemID(), title, description, status));
+    public void AddNewItem(String title, String description, Boolean status, ToDoDueDate date){
+        ToDoList.add(new ToDo(NextItemID(), title, description, status, date));
     }
 
     public ToDo GetFirstItem(){

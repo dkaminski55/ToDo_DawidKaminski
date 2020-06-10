@@ -101,6 +101,13 @@ public class DeleteFragment extends Fragment {
                                 }
                             }
                         });
+                builder.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //do nothing
+                            }
+                        });
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
